@@ -26,6 +26,23 @@ Este arquivo registra o histórico de funcionalidades planejadas, implementadas,
   - `js/camera.js`
   - `backlog.md`
 
+### [2026-03-03] - Passo 4: Interface Principal do Totem e Fluxo de Ponto
+- **Status:** Finalizado
+- **Descrição:** Criação da interface principal do Totem/Tablet em HTML5/Pico.css com Lucide Icons e teclado numérico virtual. Integração do script `js/app.js` para autenticação com Supabase, captura da fotografia antifraude, inserção do ponto e exibição/impressão do comprovante digital com QR Code.
+- **Arquivos Afetados:**
+  - `index.html`
+  - `css/style.css`
+  - `js/app.js`
+  - `backlog.md`
+
+### [2026-03-03] - Passo 5: Validador Público de Tickets
+- **Status:** Finalizado
+- **Descrição:** Criação da página pública de auditoria `validator.html` e script `js/validator.js` para verificação de autencidade de comprovantes através do Hash SHA-256 e consulta na base do Supabase.
+- **Arquivos Afetados:**
+  - `validator.html`
+  - `js/validator.js`
+  - `backlog.md`
+
 ---
 
 ## 📋 Fila de Trabalho / Backlog do Projeto
@@ -41,12 +58,12 @@ Este arquivo registra o histórico de funcionalidades planejadas, implementadas,
 - [x] **2.4** Implementar função para encerrar/interromper o fluxo de vídeo e liberar a câmera.
 
 ### 3. Interface Principal do Totem / Registro de Ponto
-- [ ] **3.1** Criar layout `index.html` otimizado para Tablet/Desktop (sem emojis, utilizando Lucide Icons e Pico.css).
-- [ ] **3.2** Implementar formulário/teclado de entrada de Matrícula e PIN.
-- [ ] **3.3** Integrar captura de foto opcional/obrigatória na confirmação do registro.
-- [ ] **3.4** Criar script `js/app.js` para gerenciar fluxo de registro e interação com Supabase.
+- [x] **3.1** Criar layout `index.html` otimizado para Tablet/Desktop (sem emojis, utilizando Lucide Icons e Pico.css).
+- [x] **3.2** Implementar formulário/teclado de entrada de Matrícula e PIN.
+- [x] **3.3** Integrar captura de foto opcional/obrigatória na confirmação do registro.
+- [x] **3.4** Criar script `js/app.js` para gerenciar fluxo de registro e interação com Supabase.
 
 ### 4. Validação de Tickets e Comprovantes
-- [ ] **4.1** Criar página `validator.html` para verificação de autenticidade do ticket via Hash SHA-256 ou QR Code.
-- [ ] **4.2** Criar script `js/validator.js` para consultar e validar o hash no banco Supabase.
-- [ ] **4.3** Estilizar visualização e impressão do comprovante digital (`@media print` no CSS).
+- [x] **4.1** Criar página `validator.html` para verificação de autenticidade do ticket via Hash SHA-256 ou QR Code.
+- [x] **4.2** Criar script `js/validator.js` para consultar e validar o hash no banco Supabase.
+- [x] **4.3** Estilizar visualização e impressão do comprovante digital (`@media print` no CSS).

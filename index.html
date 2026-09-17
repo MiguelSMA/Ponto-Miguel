@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REP - Registro de Ponto Eletrônico</title>
+
+  <!-- Pico.css Framework -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <!-- QRCode.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <!-- Estilos Customizados -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="totem-container">
+    <!-- Cabeçalho -->
+    <header class="totem-header">
+      <h1>
+        <i data-lucide="clock"></i>
+        <span>REP - Ponto Eletrônico</span>
+      </h1>
+      <div class="clock-display">
+        <i data-lucide="calendar"></i>
+        <span id="current-clock">--:--:--</span>
+      </div>
+    </header>
+
+    <!-- Conteúdo Principal / Grid -->
+    <main class="grid-totem" id="main-content">
+      <!-- Câmera Antifraude -->
+      <section class="camera-card">
+        <h3><i data-lucide="camera"></i> Câmera Antifraude</h3>
+        <div class="video-wrapper">
+          <video id="webcam-video" autoplay playsinline muted></video>
+        </div>
+        <small style="margin-top: 0.5rem; color: #6c757d;">
+          <i data-lucide="shield-check"></i> Foto registrada no momento da confirmação.
+        </small>
+      </section>
+
+      <!-- Formulário de Autenticação / Ponto -->
+      <section class="form-card">
+        <h3><i data-lucide="user-check"></i> Confirmar Identidade</h3>
+
+        <div id="feedback-message" style="display: none; padding: 0.75rem; margin-bottom: 1rem; border-radius: 6px;"></div>
+
+        <form id="ponto-form" onsubmit="return false;">
+          <label for="input-matricula">
+            <i data-lucide="id-card"></i> Matrícula
+            <input type="text" id="input-matricula" placeholder="Digite a matrícula" autocomplete="off" required readonly>
+          </label>
+
+          <label for="input-pin">
+            <i data-lucide="lock"></i> PIN Secreto
+            <input type="password" id="input-pin" placeholder="****" maxlength="8" autocomplete="off" required readonly>
+          </label>
+
+          <!-- Modos de seleção de campo para teclado numérico -->
+          <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+            <button type="button" class="secondary outline" id="select-matricula-btn">Focar Matrícula</button>
+            <button type="button" class="secondary outline" id="select-pin-btn">Focar PIN</button>
+          </div>
+
+          <!-- Teclado Numérico Virtual -->
+          <div class="keypad">
+            <button type="button" class="secondary" data-key="1">1</button>
+            <button type="button" class="secondary" data-key="2">2</button>
+            <button type="button" class="secondary" data-key="3">3</button>
+            <button type="button" class="secondary" data-key="4">4</button>
+            <button type="button" class="secondary" data-key="5">5</button>
+            <button type="button" class="secondary" data-key="6">6</button>
+            <button type="button" class="secondary" data-key="7">7</button>
+            <button type="button" class="secondary" data-key="8">8</button>
+            <button type="button" class="secondary" data-key="9">9</button>
+            <button type="button" class="contrast" data-key="clear">Limpar</button>
+            <button type="button" class="secondary" data-key="0">0</button>
+            <button type="button" class="contrast" data-key="backspace"><i data-lucide="delete"></i></button>
+          </div>
+
+          <!-- Botões de Ação -->
+          <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <button type="button" id="btn-entrada" class="primary" style="flex: 1; background-color: #198754; border-color: #198754;">
+              <i data-lucide="log-in"></i> ENTRADA
+            </button>
+            <button type="button" id="btn-saida" class="primary" style="flex: 1; background-color: #dc3545; border-color: #dc3545;">
+              <i data-lucide="log-out"></i> SAÍDA
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <!-- Modal / Seção do Ticket de Comprovante Emitido -->
+    <dialog id="ticket-modal">
+      <article class="ticket-card" id="ticket-printable">
+        <header class="ticket-header">
+          <button aria-label="Close" class="close no-print" id="close-modal-btn"></button>
+          <h4><i data-lucide="receipt"></i> COMPROVANTE DE PONTO</h4>
+          <small>REP - Sistema de Ponto Eletrônico</small>
+        </header>
+
+        <div class="ticket-body">
+          <p><strong>Funcionário:</strong> <span id="ticket-nome">--</span></p>
+          <p><strong>Matrícula:</strong> <span id="ticket-matricula">--</span></p>
+          <p><strong>Tipo de Registro:</strong> <span id="ticket-tipo">--</span></p>
+          <p><strong>Data/Hora Oficial:</strong> <span id="ticket-data-hora">--</span></p>
+
+          <div class="ticket-qr" id="qrcode-container"></div>
+
+          <p style="text-align: center; margin-bottom: 0.2rem;"><small>Código Hash de Verificação:</small></p>
+          <div class="hash-code" id="ticket-hash">----------------</div>
+        </div>
+
+        <footer class="no-print" style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+          <button type="button" class="primary" id="print-ticket-btn" style="flex: 1;">
+            <i data-lucide="printer"></i> Imprimir Comprovante
+          </button>
+          <button type="button" class="secondary outline" id="done-ticket-btn" style="flex: 1;">
+            <i data-lucide="check"></i> Concluir
+          </button>
+        </footer>
+      </article>
+    </dialog>
+
+    <footer style="margin-top: 3rem; text-align: center; color: #6c757d;">
+      <p><small><a href="validator.html" target="_blank"><i data-lucide="shield-search"></i> Validar Comprovante / Hash de Ticket</a></small></p>
+    </footer>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+  <script>
+    // Inicialização dos Lucide Icons
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REP - Validador de Ticket de Comprovante</title>
+
+  <!-- Pico.css Framework -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <!-- Estilos Customizados -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="totem-container" style="max-width: 800px; margin-top: 2rem;">
+    <header class="totem-header">
+      <h1>
+        <i data-lucide="shield-check"></i>
+        <span>Validador de Comprovante REP</span>
+      </h1>
+      <a href="index.html" class="outline role-button"><i data-lucide="arrow-left"></i> Voltar ao Totem</a>
+    </header>
+
+    <main>
+      <article>
+        <h3><i data-lucide="search"></i> Verificação de Autenticidade do Ticket</h3>
+        <p><small>Informe o código Hash SHA-256 impresso no comprovante para verificar a veracidade do registro de ponto.</small></p>
+
+        <form id="validator-form" onsubmit="return false;">
+          <label for="input-hash">
+            Hash de Verificação (64 caracteres)
+            <input type="text" id="input-hash" placeholder="ex: a1b2c3d4..." maxlength="64" required>
+          </label>
+          <button type="submit" id="btn-validar" class="primary"><i data-lucide="check-circle"></i> Validar Ticket</button>
+        </form>
+
+        <hr style="margin: 2rem 0;">
+
+        <div id="validation-result" style="display: none;">
+          <!-- Card de resultado renderizado via validator.js -->
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script type="module" src="js/validator.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>
