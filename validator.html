@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REP - Validador de Comprovante de Ponto</title>
+    <!-- Pico.css v2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <!-- Estilos Customizados -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <header class="totem-header">
+        <div class="totem-brand">
+            <i data-lucide="shield-check"></i>
+            <span>REP - Validador Oficial de Tickets</span>
+        </div>
+        <div>
+            <a href="index.html" class="nav-link">
+                <i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i>
+                Voltar ao Totem
+            </a>
+        </div>
+    </header>
+
+    <main class="totem-container" style="max-width: 800px;">
+        <article class="panel-card" style="margin-top: 1rem;">
+            <header>
+                <h3 style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i data-lucide="search-check"></i>
+                    Consulta e Auditoria de Ticket
+                </h3>
+                <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 0;">
+                    Insira o código Hash SHA-256 presente no ticket para verificar a autenticidade e integridade dos dados no banco do servidor.
+                </p>
+            </header>
+
+            <form id="validator-form" style="margin-top: 1.5rem;" onsubmit="return false;">
+                <label for="input-hash">
+                    Código Hash de Verificação SHA-256
+                    <input type="text" id="input-hash" placeholder="Ex: a1b2c3d4e5f6..." required autocomplete="off" style="font-family: monospace;">
+                </label>
+                <button type="submit" id="btn-validate" class="primary">
+                    <i data-lucide="shield-search"></i>
+                    Verificar Autenticidade
+                </button>
+            </form>
+
+            <div id="validation-result" style="margin-top: 2rem; display: none;">
+                <!-- Resultados preenchidos via JS -->
+            </div>
+        </article>
+    </main>
+
+    <footer class="totem-footer">
+        <div>
+            REP - Sistema de Controle de Ponto Eletrônico &bull; Módulo de Validação Pública
+        </div>
+    </footer>
+
+    <script type="module" src="js/validator.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+</html>

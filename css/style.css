@@ -1,0 +1,374 @@
+/* Estilos Customizados - Controle de Ponto Eletrônico (REP) */
+
+:root {
+    --pico-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    --pico-primary: #1e3a8a;
+    --pico-primary-background: #1e3a8a;
+    --pico-primary-hover: #1e40af;
+    --pico-border-radius: 0.5rem;
+    --brand-blue: #1e3a8a;
+    --brand-teal: #0d9488;
+    --brand-success: #15803d;
+    --brand-danger: #b91c1c;
+    --bg-surface: #f8fafc;
+}
+
+body {
+    background-color: var(--bg-surface);
+    color: #1e293b;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.totem-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.totem-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--brand-blue);
+}
+
+.totem-brand svg {
+    width: 28px;
+    height: 28px;
+}
+
+.totem-clock {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.clock-time {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.1;
+}
+
+.clock-date {
+    font-size: 0.875rem;
+    color: #64748b;
+    text-transform: capitalize;
+}
+
+.totem-container {
+    max-width: 1280px;
+    margin: 2rem auto;
+    width: 95%;
+    flex: 1;
+}
+
+.totem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+@media (max-width: 1023px) {
+    .totem-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.panel-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Câmera Area */
+.camera-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background-color: #0f172a;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#camera-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.camera-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    margin: 1.5rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.camera-status-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(4px);
+    color: #ffffff;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #ef4444;
+}
+
+.status-dot.active {
+    background-color: #22c55e;
+    box-shadow: 0 0 8px #22c55e;
+}
+
+.camera-error-msg {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.95);
+    color: #f87171;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    gap: 0.75rem;
+}
+
+/* Numeric Keypad */
+.keypad-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.keypad-btn {
+    padding: 0.85rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    background-color: #f1f5f9;
+    color: #1e293b;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.keypad-btn:hover {
+    background-color: #e2e8f0;
+}
+
+.keypad-btn:active {
+    background-color: #cbd5e1;
+    transform: scale(0.98);
+}
+
+.keypad-btn.action-btn {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border-color: #fca5a5;
+}
+
+.keypad-btn.action-btn:hover {
+    background-color: #fecaca;
+}
+
+/* Modal Ticket */
+.ticket-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.ticket-modal.open {
+    display: flex;
+}
+
+.ticket-paper {
+    background: #ffffff;
+    width: 100%;
+    max-width: 420px;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    border: 1px dashed #cbd5e1;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.ticket-header {
+    text-align: center;
+    border-bottom: 2px dashed #94a3b8;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.ticket-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.ticket-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.ticket-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ticket-label {
+    color: #64748b;
+}
+
+.ticket-value {
+    font-weight: bold;
+    color: #0f172a;
+    text-align: right;
+}
+
+.ticket-type-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.ticket-type-badge.ENTRADA {
+    background-color: var(--brand-success);
+}
+
+.ticket-type-badge.SAIDA {
+    background-color: var(--brand-teal);
+}
+
+.ticket-hash {
+    word-break: break-all;
+    font-size: 0.75rem;
+    background-color: #f1f5f9;
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+}
+
+.ticket-photo-preview {
+    width: 100%;
+    max-height: 140px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    margin-top: 0.5rem;
+}
+
+.ticket-qr-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed #cbd5e1;
+}
+
+.ticket-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+.totem-footer {
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #64748b;
+    border-top: 1px solid #e2e8f0;
+    background: #ffffff;
+}
+
+.nav-link {
+    color: var(--brand-blue);
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+/* Rules for printing tickets */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    .ticket-paper, .ticket-paper * {
+        visibility: visible;
+    }
+    .ticket-paper {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        box-shadow: none;
+        border: none;
+        padding: 0;
+    }
+    .ticket-actions {
+        display: none !important;
+    }
+}
