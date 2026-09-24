@@ -1,0 +1,10 @@
+127.0.0.1 - - [24/Sep/2026 14:05:56] "HEAD / HTTP/1.1" 200 -
+127.0.0.1 - - [24/Sep/2026 14:05:56] "HEAD /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [24/Sep/2026 14:05:56] "HEAD /validator.html HTTP/1.1" 200 -
+127.0.0.1 - - [24/Sep/2026 14:06:44] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [24/Sep/2026 14:06:44] "GET /js/app.js HTTP/1.1" 200 -
+127.0.0.1 - - [24/Sep/2026 14:06:44] "GET /css/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [24/Sep/2026 14:06:45] "GET /js/supabase.js HTTP/1.1" 200 -
+127.0.0.1 - - [24/Sep/2026 14:06:45] "GET /js/camera.js HTTP/1.1" 200 -
+127.0.0.1 - - [24/Sep/2026 14:06:51] "GET /validator.html HTTP/1.1" 200 -
+127.0.0.1 - - [24/Sep/2026 14:06:51] "GET /js/validator.js HTTP/1.1" 200 -
