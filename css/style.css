@@ -1,0 +1,360 @@
+/* CSS Customizado - Controle de Ponto Eletrônico (REP) */
+
+:root {
+  --bg-color: #f8f9fa;
+  --card-bg: #ffffff;
+  --primary-color: #0284c7;
+  --primary-hover: #0369a1;
+  --text-color: #0f172a;
+  --border-color: #e2e8f0;
+  --danger-color: #dc2626;
+  --success-color: #16a34a;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header com Relógio */
+header.totem-header {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--border-color);
+}
+
+.totem-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.totem-title h1 {
+  font-size: 1.4rem;
+  margin: 0;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.clock-display {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.clock-time {
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-family: monospace;
+  color: var(--primary-color);
+  line-height: 1;
+}
+
+.clock-date {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-top: 0.2rem;
+}
+
+/* Layout Grid para Tablet/Desktop Landscape */
+.totem-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  flex: 1;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .totem-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.totem-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.card-header h2 {
+  font-size: 1.15rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+/* Container de Câmera */
+.camera-view-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background-color: #0f172a;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+video#camera-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1); /* Efeito espelho para usabilidade */
+}
+
+.camera-overlay-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(15, 23, 42, 0.75);
+  color: #ffffff;
+  padding: 0.3rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  backdrop-filter: blur(4px);
+}
+
+/* Teclado Numérico Touch (PinPad) */
+.keypad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.keypad-btn {
+  padding: 0.85rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  background-color: #f1f5f9;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.keypad-btn:hover {
+  background-color: #e2e8f0;
+}
+
+.keypad-btn:active {
+  background-color: #cbd5e1;
+}
+
+/* Modal do Ticket / Comprovante */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ticket-modal {
+  background: #ffffff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 480px;
+  padding: 1.75rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  border: 2px dashed #94a3b8;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.ticket-header {
+  text-align: center;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.ticket-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+.ticket-header p {
+  margin: 0.2rem 0 0 0;
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.ticket-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ticket-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.ticket-row .label {
+  color: #64748b;
+}
+
+.ticket-row .value {
+  font-weight: 600;
+  color: var(--text-color);
+  text-align: right;
+}
+
+.ticket-photo-box {
+  width: 100%;
+  height: 180px;
+  background-color: #f1f5f9;
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem 0;
+  border: 1px solid var(--border-color);
+}
+
+.ticket-photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ticket-hash {
+  background: #f8fafc;
+  padding: 0.6rem;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.72rem;
+  word-break: break-all;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  text-align: center;
+}
+
+.ticket-qr {
+  display: flex;
+  justify-content: center;
+  margin: 0.5rem 0;
+}
+
+.ticket-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+/* Alertas e Notificações */
+.alert-box {
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.alert-box.danger {
+  background-color: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.alert-box.success {
+  background-color: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+/* REGRAS DE IMPRESSÃO (@media print) */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .modal-backdrop {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .ticket-modal, .ticket-modal * {
+    visibility: visible;
+  }
+
+  .ticket-modal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 80mm;
+    box-shadow: none;
+    border: 1px solid #000;
+    padding: 10mm;
+    margin: 0 auto;
+  }
+
+  .ticket-actions {
+    display: none !important;
+  }
+}

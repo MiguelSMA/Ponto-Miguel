@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controle de Ponto Eletrônico (REP) - Totem</title>
+
+  <!-- Pico.css CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+
+  <!-- Estilos Customizados & Regras @media print -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Lucide Icons CDN (Sem emojis) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Cabeçalho do Totem com Relógio em Tempo Real -->
+  <header class="totem-header">
+    <div class="totem-title">
+      <i data-lucide="clock" style="width: 2rem; height: 2rem; color: var(--primary-color);"></i>
+      <div>
+        <h1>Controle de Ponto Eletrônico</h1>
+        <small style="color: #64748b;">Totem de Autoatendimento REP</small>
+      </div>
+    </div>
+    <div class="clock-display">
+      <span class="clock-time" id="live-time">00:00:00</span>
+      <span class="clock-date" id="live-date">--/--/----</span>
+    </div>
+  </header>
+
+  <!-- Layout Principal em Grid (Tablet / Desktop Landscape) -->
+  <main class="totem-container">
+
+    <!-- Card Esquerdo: Câmera Antifraude (WebCam) -->
+    <section class="totem-card">
+      <div class="card-header">
+        <h2>
+          <i data-lucide="camera"></i>
+          Captura Antifraude
+        </h2>
+        <div id="camera-status">
+          <span class="badge" style="font-size: 0.8rem; color: #64748b;">
+            <i data-lucide="refresh-cw" class="spin"></i> Inicializando...
+          </span>
+        </div>
+      </div>
+
+      <div class="camera-view-container">
+        <video id="camera-preview" autoplay playsinline muted></video>
+        <div class="camera-overlay-badge">
+          <i data-lucide="shield-check" style="width: 14px; height: 14px; color: #22c55e;"></i>
+          <span>Reconhecimento Ativo</span>
+        </div>
+      </div>
+
+      <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.75rem; text-align: center;">
+        <i data-lucide="info" style="width: 14px; height: 14px; vertical-align: middle;"></i>
+        A foto será registrada automaticamente ao confirmar sua identificação.
+      </p>
+    </section>
+
+    <!-- Card Direito: Identificação do Funcionário (Matrícula + PIN) -->
+    <section class="totem-card">
+      <div class="card-header">
+        <h2>
+          <i data-lucide="user-check"></i>
+          Identificação do Colaborador
+        </h2>
+        <a href="validator.html" style="font-size: 0.85rem; text-decoration: none; display: flex; align-items: center; gap: 0.3rem;">
+          <i data-lucide="file-check-2" style="width: 16px; height: 16px;"></i>
+          Validar Comprovante
+        </a>
+      </div>
+
+      <!-- Alerta Dinâmico -->
+      <div id="form-alert" style="display: none;"></div>
+
+      <form id="ponto-form" onsubmit="return false;">
+        <div style="margin-bottom: 1rem;">
+          <label for="matricula" style="font-size: 0.9rem; font-weight: 600;">
+            <i data-lucide="id-card" style="width: 16px; height: 16px; vertical-align: middle;"></i>
+            Matrícula do Funcionário
+          </label>
+          <input type="text" id="matricula" name="matricula" placeholder="Ex: MAT1001" required autocomplete="off">
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <label for="pin" style="font-size: 0.9rem; font-weight: 600;">
+            <i data-lucide="lock" style="width: 16px; height: 16px; vertical-align: middle;"></i>
+            PIN de Segurança (4 a 6 dígitos)
+          </label>
+          <input type="password" id="pin" name="pin" placeholder="••••" maxlength="6" required autocomplete="off">
+        </div>
+
+        <!-- Teclado Numérico Touch (PinPad) -->
+        <div class="keypad-grid" id="pinpad">
+          <button type="button" class="keypad-btn" data-key="1">1</button>
+          <button type="button" class="keypad-btn" data-key="2">2</button>
+          <button type="button" class="keypad-btn" data-key="3">3</button>
+          <button type="button" class="keypad-btn" data-key="4">4</button>
+          <button type="button" class="keypad-btn" data-key="5">5</button>
+          <button type="button" class="keypad-btn" data-key="6">6</button>
+          <button type="button" class="keypad-btn" data-key="7">7</button>
+          <button type="button" class="keypad-btn" data-key="8">8</button>
+          <button type="button" class="keypad-btn" data-key="9">9</button>
+          <button type="button" class="keypad-btn" data-key="clear" style="color: var(--danger-color);">C</button>
+          <button type="button" class="keypad-btn" data-key="0">0</button>
+          <button type="button" class="keypad-btn" data-key="backspace"><i data-lucide="delete"></i></button>
+        </div>
+
+        <div style="margin-top: 1.25rem; display: flex; gap: 0.75rem;">
+          <button type="button" id="btn-entrada" class="contrast" style="flex: 1; background-color: #16a34a; border-color: #16a34a;">
+            <i data-lucide="log-in" style="vertical-align: middle;"></i> ENTRADA
+          </button>
+          <button type="button" id="btn-saida" class="contrast" style="flex: 1; background-color: #2563eb; border-color: #2563eb;">
+            <i data-lucide="log-out" style="vertical-align: middle;"></i> SAÍDA
+          </button>
+        </div>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- Modal do Comprovante / Ticket de Registro de Ponto -->
+  <div class="modal-backdrop" id="ticket-modal">
+    <div class="ticket-modal">
+      <div class="ticket-header">
+        <i data-lucide="check-circle-2" style="width: 2.5rem; height: 2.5rem; color: #16a34a; margin-bottom: 0.5rem;"></i>
+        <h3>COMPROVANTE DE REGISTRO DE PONTO</h3>
+        <p>Sistema Eletrônico REP - Portaria 671/MTP</p>
+      </div>
+
+      <div class="ticket-body">
+        <div class="ticket-row">
+          <span class="label">Colaborador:</span>
+          <span class="value" id="ticket-nome">---</span>
+        </div>
+        <div class="ticket-row">
+          <span class="label">Matrícula:</span>
+          <span class="value" id="ticket-matricula">---</span>
+        </div>
+        <div class="ticket-row">
+          <span class="label">Operação:</span>
+          <span class="value" id="ticket-tipo" style="color: #0284c7;">---</span>
+        </div>
+        <div class="ticket-row">
+          <span class="label">Data & Hora Oficial:</span>
+          <span class="value" id="ticket-timestamp">---</span>
+        </div>
+
+        <div class="ticket-photo-box">
+          <img id="ticket-photo" src="" alt="Foto Antifraude Capturada">
+        </div>
+
+        <div style="text-align: center; font-size: 0.75rem; color: #64748b; margin-top: 0.25rem;">
+          Código de Verificação SHA-256 (Inviolável):
+        </div>
+        <div class="ticket-hash" id="ticket-hash">----------------------------------------------------------------</div>
+
+        <div class="ticket-qr" id="ticket-qrcode"></div>
+      </div>
+
+      <div class="ticket-actions">
+        <button type="button" id="btn-imprimir" style="flex: 1; background-color: #0284c7;">
+          <i data-lucide="printer"></i> Imprimir
+        </button>
+        <button type="button" id="btn-fechar-ticket" class="secondary" style="flex: 1;">
+          <i data-lucide="x"></i> Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript ES6+ Module Controller -->
+  <script type="module" src="js/app.js"></script>
+
+  <script>
+    // Inicializar ícones do Lucide
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>

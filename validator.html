@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validador de Comprovantes REP</title>
+
+  <!-- Pico.css CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+
+  <!-- Estilos Customizados -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Lucide Icons CDN (Sem emojis) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Cabeçalho -->
+  <header class="totem-header">
+    <div class="totem-title">
+      <i data-lucide="shield-check" style="width: 2rem; height: 2rem; color: var(--primary-color);"></i>
+      <div>
+        <h1>Validador de Comprovante REP</h1>
+        <small style="color: #64748b;">Auditoria e Integridade do Registro de Ponto</small>
+      </div>
+    </div>
+    <div>
+      <a href="index.html" class="secondary" style="text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 0.4rem;">
+        <i data-lucide="arrow-left"></i> Voltar ao Totem
+      </a>
+    </div>
+  </header>
+
+  <main style="max-width: 800px; margin: 0 auto; width: 100%;">
+
+    <section class="totem-card">
+      <div class="card-header">
+        <h2>
+          <i data-lucide="search"></i>
+          Consultar Código de Verificação SHA-256
+        </h2>
+      </div>
+
+      <form id="validator-form" onsubmit="return false;" style="display: flex; gap: 0.75rem;">
+        <input type="text" id="hash-input" placeholder="Informe ou cole o Hash SHA-256 de 64 caracteres" required style="flex: 1; font-family: monospace; font-size: 0.9rem;">
+        <button type="submit" id="btn-validar" style="width: auto; padding: 0 1.5rem; background-color: var(--primary-color);">
+          <i data-lucide="search"></i> Validar
+        </button>
+      </form>
+
+      <!-- Container do Resultado -->
+      <div id="validator-result" style="margin-top: 1.5rem; display: none;"></div>
+    </section>
+
+  </main>
+
+  <script type="module" src="js/validator.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>
