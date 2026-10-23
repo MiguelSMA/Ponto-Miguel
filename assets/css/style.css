@@ -1,0 +1,301 @@
+/* ============================================================================
+   AVENTURE - CSS PRINCIPAL DA APLICAÇÃO
+   Paleta Oficial:
+   - Azul-turquesa: #0097B2
+   - Amarelo: #FFDE59
+   - Verde: #00BF63
+   - Branco: #FFFFFF
+   ============================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&family=Antonio:wght@600;700&display=swap');
+
+:root {
+    --color-primary: #0097B2;
+    --color-primary-dark: #007A90;
+    --color-primary-light: #E6F5F8;
+    --color-secondary: #FFDE59;
+    --color-secondary-dark: #D4B425;
+    --color-accent: #00BF63;
+    --color-white: #FFFFFF;
+    --color-bg: #F4F7F9;
+    --color-text: #2C3E50;
+    --color-text-muted: #7F8C8D;
+    --color-border: #E2E8F0;
+    --color-danger: #E74C3C;
+    --color-warning: #F39C12;
+
+    --font-main: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-heading: 'Montserrat', sans-serif;
+    --font-title: 'Antonio', 'Montserrat', sans-serif;
+
+    --font-scale: 1;
+    --sidebar-width: 260px;
+    --header-height: 70px;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-main);
+    font-size: calc(15px * var(--font-scale));
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--color-primary-dark);
+    font-weight: 700;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Base Layout Structure */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: var(--sidebar-width);
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    padding: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Header & Topbar */
+.top-header {
+    height: var(--header-height);
+    background-color: var(--color-white);
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.brand-header-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-header-title h1 {
+    font-family: var(--font-title);
+    font-size: 1.8rem;
+    color: var(--color-primary);
+    letter-spacing: 1px;
+}
+
+.brand-slogan {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Accessibility controls */
+.accessibility-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--color-primary-light);
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.accessibility-bar span {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    margin-right: 4px;
+}
+
+.btn-accessibility {
+    background: var(--color-white);
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary-dark);
+    font-weight: 700;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.btn-accessibility:hover {
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+
+/* User Info Badge */
+.user-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-text);
+}
+
+.user-role {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+/* Sidebar Styles */
+.app-sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--color-primary-dark);
+    color: var(--color-white);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+}
+
+.sidebar-logo {
+    padding: 25px 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-logo h2 {
+    font-family: var(--font-heading);
+    color: var(--color-secondary);
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.sidebar-logo p {
+    font-size: 0.75rem;
+    color: var(--color-white);
+    opacity: 0.8;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 20px 0;
+    overflow-y: auto;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+}
+
+.sidebar-nav li a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 25px;
+    color: rgba(255,255,255,0.85);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    border-left: 4px solid transparent;
+}
+
+.sidebar-nav li a:hover,
+.sidebar-nav li.active a {
+    background-color: rgba(255,255,255,0.1);
+    color: var(--color-secondary);
+    border-left-color: var(--color-secondary);
+    text-decoration: none;
+}
+
+.sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.btn-logout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(231, 76, 60, 0.85);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-logout:hover {
+    background-color: var(--color-danger);
+}
+
+/* Institutional Footer */
+.institutional-footer {
+    background-color: var(--color-white);
+    border-top: 1px solid var(--color-border);
+    padding: 15px 30px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+
+.institutional-footer strong {
+    color: var(--color-primary);
+}
